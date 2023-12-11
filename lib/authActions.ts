@@ -15,3 +15,11 @@ export async function signOut() {
 
   if (error) console.log(error)
 }
+
+export async function getUserSession() {
+  const { data, error } = await supabase.auth.getSession()
+
+  if (error) console.log(error)
+
+  return data
+}
