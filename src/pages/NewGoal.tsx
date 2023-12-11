@@ -3,15 +3,23 @@
 // Take the form output using state and pass it to supabase
 
 import { useState } from 'react'
-// import { supabase } from '../../lib/supabaseClient'
+import { supabase } from '../../lib/supabaseClient'
 
-const NewGoal = () => {
+type NewGoalProps = {
+  user: string | undefined
+}
+
+const NewGoal = ({ user }: NewGoalProps) => {
   const [goal, setGoal] = useState('')
   const [description, setDescription] = useState('')
   const [prioritized, setPrioritized] = useState(false)
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(goal, description, prioritized)
+    const { error } = await supabase
+      .from('goals')
+      .insert({ title: goal, description: description, user_id: user })
+    if (error) console.log(error)
     setGoal('')
     setDescription('')
     setPrioritized(false)

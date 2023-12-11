@@ -1,18 +1,13 @@
-import { useState, useEffect } from 'react'
-import { getUserSession, signInWithEmail, signOut } from '../../lib/authActions'
+import { useState } from 'react'
+import { signInWithEmail, signOut } from '../../lib/authActions'
 import { Link } from 'react-router-dom'
 
-const Nav = () => {
-  const [email, setEmail] = useState('')
-  const [user, setUser] = useState<string | undefined>('')
-  useEffect(() => {
-    const setUserSession = async () => {
-      const { session } = await getUserSession()
+type NavProps = {
+  user: string | undefined
+}
 
-      setUser(session?.user.id)
-    }
-    setUserSession()
-  }, [])
+const Nav = ({ user }: NavProps) => {
+  const [email, setEmail] = useState('')
   const handleEmailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(email)

@@ -14,7 +14,7 @@ const App = () => {
     const setUserSession = async () => {
       const { session } = await getUserSession()
 
-      setUser(session?.user?.email)
+      setUser(session?.user?.id)
     }
     setUserSession()
   }, [])
@@ -22,11 +22,10 @@ const App = () => {
   return (
     <Router>
       <div>
-        <Nav />
-        <h1>{user}</h1>
+        <Nav user={user} />
       </div>
       <Routes>
-        <Route path="new-goal" element={<NewGoal />} />
+        <Route path="new-goal" element={<NewGoal user={user} />} />
       </Routes>
     </Router>
   )
