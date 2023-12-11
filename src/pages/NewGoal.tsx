@@ -1,0 +1,44 @@
+// So, what do I need?
+// The form should be controlled.
+// Take the form output using state and pass it to supabase
+
+import { useState } from 'react'
+// import { supabase } from '../../lib/supabaseClient'
+
+const NewGoal = () => {
+  const [goal, setGoal] = useState('')
+  const [description, setDescription] = useState('')
+  const [prioritized, setPrioritized] = useState(false)
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log(goal, description, prioritized)
+    setGoal('')
+    setDescription('')
+    setPrioritized(false)
+  }
+  return (
+    <div>
+      <form onSubmit={handleFormSubmit}>
+        <label>
+          Add you new goal:{' '}
+          <input type="text" value={goal} onChange={(e) => setGoal(e.target.value)} />
+        </label>
+        <label>
+          What's your goal about?{' '}
+          <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
+        </label>
+        <label>
+          Prioritze the goal?{' '}
+          <input
+            type="checkbox"
+            checked={prioritized}
+            onChange={(e) => setPrioritized(e.target.checked)}
+          />
+        </label>
+        <button type="submit">Add goal</button>
+      </form>
+    </div>
+  )
+}
+
+export default NewGoal
