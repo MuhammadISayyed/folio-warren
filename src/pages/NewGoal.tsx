@@ -18,7 +18,7 @@ const NewGoal = ({ user }: NewGoalProps) => {
     console.log(goal, description, prioritized)
     const { error } = await supabase
       .from('goals')
-      .insert({ title: goal, description: description, user_id: user })
+      .insert({ title: goal, description: description, user_id: user, prioritized })
     if (error) console.log(error)
     setGoal('')
     setDescription('')
