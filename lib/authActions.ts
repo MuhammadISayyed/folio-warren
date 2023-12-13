@@ -16,10 +16,10 @@ export async function signOut() {
   if (error) console.log(error)
 }
 
-export async function getUserSession() {
-  const { data, error } = await supabase.auth.getSession()
+export async function getUser() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  if (error) console.log(error)
-
-  return data
+  return user
 }

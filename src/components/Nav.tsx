@@ -3,10 +3,10 @@ import { signInWithEmail, signOut } from '../../lib/authActions'
 import { Link } from 'react-router-dom'
 
 type NavProps = {
-  user: string | undefined
+  userId: string | undefined
 }
 
-const Nav = ({ user }: NavProps) => {
+const Nav = ({ userId }: NavProps) => {
   const [email, setEmail] = useState('')
   const handleEmailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -17,7 +17,7 @@ const Nav = ({ user }: NavProps) => {
   return (
     <div>
       <nav>
-        {user === undefined ? (
+        {userId === undefined ? (
           <form onSubmit={handleEmailSubmit}>
             <label>
               Email: <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -25,12 +25,12 @@ const Nav = ({ user }: NavProps) => {
             <button type="submit">Sign In</button>
           </form>
         ) : undefined}
-        {user != undefined ? (
+        {userId != undefined ? (
           <button type="submit" onClick={signOut}>
             Sign out
           </button>
         ) : undefined}
-        {user != undefined ? <Link to="/new-goal">Add new goal</Link> : undefined}
+        {userId != undefined ? <Link to="/new-goal">Add new goal</Link> : undefined}
       </nav>
     </div>
   )

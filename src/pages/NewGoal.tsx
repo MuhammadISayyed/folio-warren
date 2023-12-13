@@ -6,10 +6,10 @@ import { useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 
 type NewGoalProps = {
-  user: string | undefined
+  userId: string | undefined
 }
 
-const NewGoal = ({ user }: NewGoalProps) => {
+const NewGoal = ({ userId }: NewGoalProps) => {
   const [goal, setGoal] = useState('')
   const [description, setDescription] = useState('')
   const [prioritized, setPrioritized] = useState(false)
@@ -18,7 +18,7 @@ const NewGoal = ({ user }: NewGoalProps) => {
     console.log(goal, description, prioritized)
     const { error } = await supabase
       .from('goals')
-      .insert({ title: goal, description: description, user_id: user, prioritized })
+      .insert({ title: goal, description: description, user_id: userId, prioritized })
     if (error) console.log(error)
     setGoal('')
     setDescription('')

@@ -3,7 +3,7 @@
 // Create an index for the goals list
 // Manage permissions
 
-import { getUserSession } from '../lib/authActions'
+import { getUser } from '../lib/authActions'
 import Nav from './components/Nav'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
@@ -11,35 +11,25 @@ import NewGoal from './pages/NewGoal'
 import Goals from './pages/Goals'
 
 const App = () => {
-  const [user, setUser] = useState<string | undefined>('')
+  const [userId, setUserId] = useState<string | undefined>('')
   useEffect(() => {
-    const setUserSession = async () => {
-      const { session } = await getUserSession()
-
-      setUser(session?.user?.id)
+    const setCurrentUser = async () => {
+      const user = await getUser()
+      // console.log(user)
+      setUserId(user?.id)
     }
-    setUserSession()
+    setCurrentUser()
   }, [])
-
-  // if (!user) {
-  //   return (
-  //     <Router>
-  //       <Routes>
-  //         <Route path="*" element={<Home />} />
-  //       </Routes>
-  //     </Router>
-  //   )
-  // }
 
   return (
     <Router>
       <div>
-        <Nav user={user} />
+        <Nav userId={userId} />
       </div>
 
       <Routes>
-        {user && <Route path="new-goal" element={<NewGoal user={user} />} />}
-        {user && <Route path="goals" element={<Goals user={user} />} />}
+        {userId != undefined && <Route path="new-goal" element={<NewGoal userId={userId} />} />}
+        {userId != undefined && <Route path="goals" element={<Goals userId={userId} />} />}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
