@@ -11,23 +11,19 @@ const NewGoalForm = ({ userId }: { userId: string }) => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(goal, description, prioritized, milestones)
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('goals')
       .insert({ title: goal, description: description, user_id: userId, prioritized })
       .select()
-    console.log(data)
     if (error) console.log(error)
 
-    // const { data } = await supabase.from('goals').select().eq('title', goal)
-
-    const submitMilestones = async () => {
-      return Promise.all(
-        milestones.map((milestone) =>
-          supabase.from('milestone').insert({ milestone: milestone, goal_id: 37 })
-        )
+    const { data } = await supabase.from('goals').select().eq('title', goal)
+    Promise.all(
+      milestones.map((milestone) =>
+        // @ts-expect-error data is possibly null because it comes from supabase
+        supabase.from('milestone').insert({ milestone: milestone, goal_id: data[0].id })
       )
-    }
-    submitMilestones().then((data) => console.log(data))
+    )
 
     setGoal('')
     setDescription('')
