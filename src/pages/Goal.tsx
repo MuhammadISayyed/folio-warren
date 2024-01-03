@@ -21,7 +21,9 @@ const Goal = ({ userId }: GoalProps) => {
     description: string
     prioritized: boolean
   } | null>(null)
-  const [milestones, setMilestones] = useState<MilestoneType[] | null>(null)
+  const [milestones, setMilestones] = useState<MilestoneType[] | null>([])
+  const [milestone, setMilestone] = useState('')
+
   const [formData, setFormData] = useState<{
     title?: string
     description?: string
@@ -83,6 +85,18 @@ const Goal = ({ userId }: GoalProps) => {
     if (goalError) console.log(goalError)
   }
 
+  const handleMilestoneButtonClick = async () => {
+    const { error } = await supabase.from('milestone').insert({ milestone, goal_id: goalId })
+    if (error) console.log(error)
+
+    const { data: latestMilestone } = await supabase
+      .from('milestone')
+      .select()
+      .eq('milestone', milestone)
+    console.log(latestMilestone)
+    setMilestone('')
+  }
+
   return (
     <div>
       {isEditing ? (
@@ -127,6 +141,13 @@ const Goal = ({ userId }: GoalProps) => {
                   ))}
                 </ul>
               ) : undefined}
+            </label>
+            <label>
+              Add a new milestone:
+              <input type="text" value={milestone} onChange={(e) => setMilestone(e.target.value)} />
+              <button type="button" onClick={handleMilestoneButtonClick}>
+                Add
+              </button>
             </label>
             <button type="submit">Save</button>
           </form>
