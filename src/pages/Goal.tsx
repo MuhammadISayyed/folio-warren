@@ -7,6 +7,8 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 import { useParams } from 'react-router-dom'
+import Milestone from '../components/Milestone'
+import { MilestoneType } from '../types'
 
 type GoalProps = {
   userId: string | undefined
@@ -19,13 +21,12 @@ const Goal = ({ userId }: GoalProps) => {
     description: string
     prioritized: boolean
   } | null>(null)
-  const [milestones, setMilestones] = useState<{ milestone: string; id: string }[] | null>(null)
+  const [milestones, setMilestones] = useState<MilestoneType[] | null>(null)
   const [formData, setFormData] = useState<{
     title?: string
     description?: string
     prioritized?: boolean
   }>({ title: '', description: '', prioritized: false })
-  const [milestone, setMilestone] = useState('')
   const [isEditing, setIsEditing] = useState(false)
   const { goalId } = useParams()
   useEffect(() => {
@@ -115,12 +116,16 @@ const Goal = ({ userId }: GoalProps) => {
               Milestones
               {milestones != null ? (
                 <ul>
-                  {milestones?.map((milestone, index) => (
-                    <li key={index}>{milestone.milestone}</li>
+                  {milestones?.map((milestone) => (
+                    <Milestone
+                      key={milestone.id}
+                      milestone={milestone}
+                      setMilestones={setMilestones}
+                      milestones={milestones}
+                    />
                   ))}
                 </ul>
               ) : undefined}
-              <input type="text" value={milestone} onChange={(e) => setMilestone(e.target.value)} />
             </label>
             <button type="submit">Save</button>
           </form>
