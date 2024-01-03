@@ -29,6 +29,11 @@ const Milestone = ({ milestone, setMilestones, milestones, goalId }: MilestonePr
     if (error) console.log(error)
   }
 
+  const handleMilestoneDelete = async (id: string) => {
+    const { error } = await supabase.from('milestone').delete().eq('id', id)
+    if (error) console.log(error)
+  }
+
   return (
     <div>
       {isEditing ? (
@@ -38,7 +43,10 @@ const Milestone = ({ milestone, setMilestones, milestones, goalId }: MilestonePr
           onChange={(e) => handleEditMilestone(milestone.id, e)}
         />
       ) : (
-        <li>{milestone.milestone}</li>
+        <div>
+          <li>{milestone.milestone}</li>
+          <button onClick={() => handleMilestoneDelete(milestone.id)}>Delete</button>
+        </div>
       )}
       <button onClick={() => setIsEditing(!isEditing)}>{isEditing ? 'Cancel' : 'Edit'}</button>
       {isEditing && (
