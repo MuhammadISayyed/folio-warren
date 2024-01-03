@@ -70,7 +70,7 @@ const Goal = ({ userId }: GoalProps) => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(formData)
-    const { error } = await supabase
+    const { error: goalError } = await supabase
       .from('goals')
       .update({
         title: formData.title,
@@ -80,7 +80,7 @@ const Goal = ({ userId }: GoalProps) => {
       .eq('user_id', userId)
       .eq('id', goalId)
 
-    if (error) console.log(error)
+    if (goalError) console.log(goalError)
   }
 
   return (
@@ -122,6 +122,7 @@ const Goal = ({ userId }: GoalProps) => {
                       milestone={milestone}
                       setMilestones={setMilestones}
                       milestones={milestones}
+                      goalId={goalId}
                     />
                   ))}
                 </ul>
