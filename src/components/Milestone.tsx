@@ -27,6 +27,7 @@ const Milestone = ({ milestone, setMilestones, milestones, goalId }: MilestonePr
       .update({ milestone: milestone.milestone, goal_id: goalId })
       .eq('id', milestone.id)
     if (error) console.log(error)
+    setIsEditing(false)
   }
 
   const handleMilestoneDelete = async (id: string) => {

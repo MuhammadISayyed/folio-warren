@@ -9,6 +9,7 @@ import { supabase } from '../../lib/supabaseClient'
 import { useParams } from 'react-router-dom'
 import Milestone from '../components/Milestone'
 import { MilestoneType } from '../types'
+import NewMilestone from '../components/NewMilestone'
 
 type GoalProps = {
   userId: string | undefined
@@ -21,8 +22,7 @@ const Goal = ({ userId }: GoalProps) => {
     description: string
     prioritized: boolean
   } | null>(null)
-  const [milestones, setMilestones] = useState<MilestoneType[] | null>([])
-  const [milestone, setMilestone] = useState('')
+  const [milestones, setMilestones] = useState<MilestoneType[] | null>(null)
 
   const [formData, setFormData] = useState<{
     title?: string
@@ -85,18 +85,6 @@ const Goal = ({ userId }: GoalProps) => {
     if (goalError) console.log(goalError)
   }
 
-  const handleMilestoneButtonClick = async () => {
-    const { error } = await supabase.from('milestone').insert({ milestone, goal_id: goalId })
-    if (error) console.log(error)
-
-    const { data: latestMilestone } = await supabase
-      .from('milestone')
-      .select()
-      .eq('milestone', milestone)
-    console.log(latestMilestone)
-    setMilestone('')
-  }
-
   return (
     <div>
       {isEditing ? (
@@ -142,13 +130,9 @@ const Goal = ({ userId }: GoalProps) => {
                 </ul>
               ) : undefined}
             </label>
-            <label>
-              Add a new milestone:
-              <input type="text" value={milestone} onChange={(e) => setMilestone(e.target.value)} />
-              <button type="button" onClick={handleMilestoneButtonClick}>
-                Add
-              </button>
-            </label>
+
+            <NewMilestone setMilestones={setMilestones} milestones={milestones} goalId={goalId} />
+
             <button type="submit">Save</button>
           </form>
         </div>
