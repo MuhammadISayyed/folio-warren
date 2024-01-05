@@ -68,7 +68,7 @@ const NewGoalForm = ({ userId }: { userId: string }) => {
           ) : undefined}
           <input type="text" value={milestone} onChange={(e) => setMilestone(e.target.value)} />
           <button type="button" onClick={handleMilestoneButtonClick}>
-            Add a milestone
+            Add a new milestone
           </button>
         </label>
         <button type="submit">Add goal</button>

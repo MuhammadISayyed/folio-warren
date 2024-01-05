@@ -1,14 +1,9 @@
-// TODO
-// 1. get the goal id here
-// 2. manage whether to show the goal or an edit form using state
-// 3. Remember that the user should be able to edit the current data and remove it too
-// 4. Persist any edits and refresh the view on the client
-
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 import { useParams } from 'react-router-dom'
 import Milestone from '../components/Milestone'
 import { MilestoneType } from '../types'
+import NewMilestone from '../components/NewMilestone'
 
 type GoalProps = {
   userId: string | undefined
@@ -22,6 +17,7 @@ const Goal = ({ userId }: GoalProps) => {
     prioritized: boolean
   } | null>(null)
   const [milestones, setMilestones] = useState<MilestoneType[] | null>(null)
+
   const [formData, setFormData] = useState<{
     title?: string
     description?: string
@@ -128,6 +124,9 @@ const Goal = ({ userId }: GoalProps) => {
                 </ul>
               ) : undefined}
             </label>
+
+            <NewMilestone setMilestones={setMilestones} milestones={milestones} goalId={goalId} />
+
             <button type="submit">Save</button>
           </form>
         </div>
