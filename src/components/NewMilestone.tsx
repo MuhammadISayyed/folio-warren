@@ -1,3 +1,6 @@
+// TODO
+// Display data instantly and then send the request, unless there's an error, then remove the displayed data.
+
 import { useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 import { MilestoneType } from '../types'

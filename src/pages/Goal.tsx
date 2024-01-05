@@ -1,9 +1,3 @@
-// TODO
-// 1. get the goal id here
-// 2. manage whether to show the goal or an edit form using state
-// 3. Remember that the user should be able to edit the current data and remove it too
-// 4. Persist any edits and refresh the view on the client
-
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 import { useParams } from 'react-router-dom'

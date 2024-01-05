@@ -1,7 +1,3 @@
-// TODO
-// Update milestones from the milestone component
-// The milestone schema should be sent completely from here, including the goalId and everything else
-
 import { useState } from 'react'
 import { MilestoneType } from '../types'
 import { supabase } from '../../lib/supabaseClient'
@@ -33,6 +29,8 @@ const Milestone = ({ milestone, setMilestones, milestones, goalId }: MilestonePr
   const handleMilestoneDelete = async (id: string) => {
     const { error } = await supabase.from('milestone').delete().eq('id', id)
     if (error) console.log(error)
+    const filteredMilestones = milestones.filter((milestone) => milestone.id != id)
+    setMilestones([...filteredMilestones])
   }
 
   return (
