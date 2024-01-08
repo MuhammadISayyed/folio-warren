@@ -10,6 +10,7 @@ const AppNav = () => {
     // This means that the sign out needs a refresh to take place?
     await signOut()
     navigate('/')
+    location.reload()
   }
 
   return (
