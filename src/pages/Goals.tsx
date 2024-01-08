@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { supabase } from '../../lib/supabaseClient'
 import { useEffect, useState } from 'react'
+import AppNav from '../components/AppNav'
 
 type GoalsProps = {
   userId: string | undefined
@@ -27,6 +28,7 @@ const Goals = ({ userId }: GoalsProps) => {
 
   return (
     <div>
+      <AppNav />
       {goals?.map((goal) => (
         <Link to={`/goals/${goal.id}`} key={goal.id}>
           {goal.title}

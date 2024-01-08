@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import Milestone from '../components/Milestone'
 import { MilestoneType } from '../types'
 import NewMilestone from '../components/NewMilestone'
+import AppNav from '../components/AppNav'
 
 type GoalProps = {
   userId: string | undefined
@@ -81,6 +82,7 @@ const Goal = ({ userId }: GoalProps) => {
 
   return (
     <div>
+      <AppNav />
       {isEditing ? (
         <div>
           <form onSubmit={handleFormSubmit}>
@@ -132,7 +134,9 @@ const Goal = ({ userId }: GoalProps) => {
         </div>
       ) : (
         <div>
-          <p>{goal?.title}</p>
+          <h1>{goal?.title}</h1>
+          <p>{goal?.description}</p>
+          {goal?.prioritized ? <p>This goal is prioritized</p> : <p>This goal is deprioritized</p>}
           {milestones?.map((milestone) => (
             <div key={milestone.id}>{milestone.milestone}</div>
           ))}
