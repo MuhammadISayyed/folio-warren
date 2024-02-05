@@ -137,6 +137,7 @@ const Goal = ({ userId }: GoalProps) => {
           <h1>{goal?.title}</h1>
           <p>{goal?.description}</p>
           {goal?.prioritized ? <p>This goal is prioritized</p> : <p>This goal is deprioritized</p>}
+          {milestones ? <h2>Milestones</h2> : undefined}
           {milestones?.map((milestone) => (
             <div key={milestone.id}>{milestone.milestone}</div>
           ))}

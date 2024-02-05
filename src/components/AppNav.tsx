@@ -1,6 +1,7 @@
 import { Button } from 'react-aria-components'
 import { signOut } from '../../lib/authActions'
 import { useNavigate, Link } from 'react-router-dom'
+import styles from '../styles/appNav.module.css'
 
 const AppNav = () => {
   const navigate = useNavigate()
@@ -14,9 +15,11 @@ const AppNav = () => {
   }
 
   return (
-    <div>
-      <Link to="/">Warren Goals</Link>
-      <nav>
+    <div className={styles.menuContainer}>
+      <Link to="/goals" className={styles.logo}>
+        Warren Goals
+      </Link>
+      <nav className={styles.menuNav}>
         <Button onPress={handleSignOutPress}>Sign Out</Button>
         <Button>Check my CV</Button>
       </nav>

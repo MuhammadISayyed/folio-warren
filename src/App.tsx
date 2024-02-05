@@ -6,6 +6,7 @@ import Goal from './pages/Goal'
 import NewGoalForm from './pages/NewGoalForm'
 import SignIn from './pages/SignIn'
 import Home from './pages/Home'
+import './App.css'
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>('')
@@ -18,16 +19,20 @@ const App = () => {
   }, [])
 
   return (
-    <Router>
-      <Routes>
-        {<Route path="/" element={<Home userId={userId} />} />}
-        {<Route path="sign-in" element={<SignIn />} />}
-        {userId != undefined && <Route path="new-goal" element={<NewGoalForm userId={userId} />} />}
-        {userId != undefined && <Route path="goals" element={<Goals userId={userId} />} />}
-        {userId != undefined && <Route path="goals/:goalId" element={<Goal userId={userId} />} />}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
+    <div className="container">
+      <Router>
+        <Routes>
+          {<Route path="/" element={<Home userId={userId} />} />}
+          {<Route path="sign-in" element={<SignIn />} />}
+          {userId != undefined && (
+            <Route path="new-goal" element={<NewGoalForm userId={userId} />} />
+          )}
+          {userId != undefined && <Route path="goals" element={<Goals userId={userId} />} />}
+          {userId != undefined && <Route path="goals/:goalId" element={<Goal userId={userId} />} />}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
+    </div>
   )
 }
 
