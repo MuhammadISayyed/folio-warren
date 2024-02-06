@@ -1,0 +1,20 @@
+.milestone {
+  display: flex;
+  gap: 7rem;
+  justify-content: space-between;
+  margin-block: 2rem;
+}
+
+.milestoneBody {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.milestoneTitle {
+  list-style: none;
+}
+
+.milestoneButtons {
+  display: flex;
+  gap: 0.5rem;
+}

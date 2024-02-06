@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { MilestoneType } from '../types'
 import { supabase } from '../../lib/supabaseClient'
+import styles from '../styles/milestone.module.css'
+import { ShootingStar } from '@phosphor-icons/react'
 
 type MilestoneProps = {
   milestone: MilestoneType
@@ -37,17 +39,27 @@ const Milestone = ({ milestone, setMilestones, milestones, goalId }: MilestonePr
     <div>
       {isEditing ? (
         <input
+          className={styles.milestoneInput}
           type="text"
           value={milestone.milestone}
           onChange={(e) => handleEditMilestone(milestone.id, e)}
         />
       ) : (
-        <div>
-          <li>{milestone.milestone}</li>
-          <button onClick={() => handleMilestoneDelete(milestone.id)}>Delete</button>
+        <div className={styles.milestone}>
+          <div className={styles.milestoneBody}>
+            <ShootingStar size={24} color="hsl(37, 99%, 67%)" />
+            <li className={styles.milestoneTitle}>{milestone.milestone}</li>
+          </div>
+          <div className={styles.milestoneButtons}>
+            <button type="button" onClick={() => handleMilestoneDelete(milestone.id)}>
+              Delete
+            </button>
+            <button type="button" onClick={() => setIsEditing(!isEditing)}>
+              {isEditing ? 'Cancel' : 'Edit'}
+            </button>
+          </div>
         </div>
       )}
-      <button onClick={() => setIsEditing(!isEditing)}>{isEditing ? 'Cancel' : 'Edit'}</button>
       {isEditing && (
         <button type="submit" onClick={handleSaveButton}>
           Save

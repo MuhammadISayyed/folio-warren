@@ -87,18 +87,20 @@ const Goal = ({ userId }: GoalProps) => {
       <AppNav />
       {isEditing ? (
         <div>
-          <form onSubmit={handleFormSubmit}>
-            <label>
+          <form className={styles.goalForm} onSubmit={handleFormSubmit}>
+            <label className={styles.formLabel}>
               Goal:
               <input
+                className={styles.formInput}
                 type="text"
                 value={formData?.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               />
             </label>
-            <label>
+            <label className={styles.formLabel}>
               Description:
               <input
+                className={styles.formInput}
                 type="text"
                 value={formData?.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
