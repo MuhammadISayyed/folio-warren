@@ -1,0 +1,19 @@
+.newMilestoneContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 75%;
+  gap: 2rem;
+}
+
+.input {
+  flex-grow: 1;
+  height: 3rem;
+  border-radius: 1rem;
+  padding-inline: 0.5rem;
+  border: 1px solid lightgrey;
+}

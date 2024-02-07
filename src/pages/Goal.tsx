@@ -98,7 +98,7 @@ const Goal = ({ userId }: GoalProps) => {
               />
             </label>
             <label className={styles.formLabel}>
-              Description:
+              <p>Description:</p>
               <input
                 className={styles.formInput}
                 type="text"
@@ -107,7 +107,7 @@ const Goal = ({ userId }: GoalProps) => {
               />
             </label>
             <label>
-              prioritized?
+              <p>prioritized?</p>
               <input
                 type="checkbox"
                 checked={formData.prioritized}
@@ -115,25 +115,29 @@ const Goal = ({ userId }: GoalProps) => {
               />
             </label>
             <label>
-              Milestones
-              {milestones != null ? (
-                <ul>
-                  {milestones?.map((milestone) => (
-                    <Milestone
-                      key={milestone.id}
-                      milestone={milestone}
-                      setMilestones={setMilestones}
-                      milestones={milestones}
-                      goalId={goalId}
-                    />
-                  ))}
-                </ul>
-              ) : undefined}
+              <div className={styles.milestonesContainer}>
+                <p>Milestones</p>
+                {milestones != null ? (
+                  <div>
+                    {milestones?.map((milestone) => (
+                      <Milestone
+                        key={milestone.id}
+                        milestone={milestone}
+                        setMilestones={setMilestones}
+                        milestones={milestones}
+                        goalId={goalId}
+                      />
+                    ))}
+                  </div>
+                ) : undefined}
+              </div>
             </label>
 
             <NewMilestone setMilestones={setMilestones} milestones={milestones} goalId={goalId} />
 
-            <button type="submit">Save</button>
+            <button className={styles.saveButton} type="submit">
+              Save
+            </button>
           </form>
         </div>
       ) : (
@@ -174,7 +178,7 @@ const Goal = ({ userId }: GoalProps) => {
             ))}
           </ul>
           {goal ? (
-            <button className={styles.editButton} onClick={() => setIsEditing(true)}>
+            <button className={styles.editButton} type="button" onClick={() => setIsEditing(true)}>
               Edit
             </button>
           ) : undefined}

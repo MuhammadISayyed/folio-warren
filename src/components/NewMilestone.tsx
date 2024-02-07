@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 import { MilestoneType } from '../types'
+import styles from '../styles/newMilestone.module.css'
 
 type NewMilestoneProps = {
   setMilestones: React.Dispatch<React.SetStateAction<MilestoneType[] | null>>
@@ -40,13 +41,20 @@ const NewMilestone = ({ setMilestones, milestones, goalId }: NewMilestoneProps) 
   }
 
   return (
-    <div>
+    <div className={styles.newMilestoneContainer}>
       <label>
-        Add a new milestone:
-        <input type="text" value={newMilestone} onChange={(e) => setNewMilestone(e.target.value)} />
-        <button type="button" onClick={handleMilestoneAddClick}>
-          Add
-        </button>
+        <p>Add a new milestone:</p>
+        <div className={styles.inputContainer}>
+          <input
+            className={styles.input}
+            type="text"
+            value={newMilestone}
+            onChange={(e) => setNewMilestone(e.target.value)}
+          />
+          <button type="button" onClick={handleMilestoneAddClick}>
+            Add
+          </button>
+        </div>
       </label>
     </div>
   )

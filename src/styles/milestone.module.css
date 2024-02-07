@@ -3,18 +3,26 @@
   gap: 7rem;
   justify-content: space-between;
   margin-block: 2rem;
+  width: 75%;
 }
 
 .milestoneBody {
   display: flex;
+  /* flex-direction: column; */
   gap: 0.7rem;
-}
-
-.milestoneTitle {
-  list-style: none;
+  justify-content: center;
+  align-items: center;
 }
 
 .milestoneButtons {
   display: flex;
   gap: 0.5rem;
+}
+
+.milestoneInput {
+  border: 1px solid lightgrey;
+  height: 2rem;
+  border-radius: 1rem;
+  padding-inline: 0.5rem;
+  flex-grow: 1;
 }

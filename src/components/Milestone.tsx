@@ -37,18 +37,25 @@ const Milestone = ({ milestone, setMilestones, milestones, goalId }: MilestonePr
 
   return (
     <div>
+      {/* There's a problem here: when I try to edit the last milestone, it deletes the previous one; however, when I try to edit the fist one, it works fine */}
       {isEditing ? (
-        <input
-          className={styles.milestoneInput}
-          type="text"
-          value={milestone.milestone}
-          onChange={(e) => handleEditMilestone(milestone.id, e)}
-        />
+        <div className={styles.milestone}>
+          <input
+            className={styles.milestoneInput}
+            type="text"
+            value={milestone.milestone}
+            onChange={(e) => handleEditMilestone(milestone.id, e)}
+          />
+
+          <button type="submit" onClick={handleSaveButton}>
+            Save
+          </button>
+        </div>
       ) : (
         <div className={styles.milestone}>
           <div className={styles.milestoneBody}>
             <ShootingStar size={24} color="hsl(37, 99%, 67%)" />
-            <li className={styles.milestoneTitle}>{milestone.milestone}</li>
+            <div className={styles.milestoneTitle}>{milestone.milestone}</div>
           </div>
           <div className={styles.milestoneButtons}>
             <button type="button" onClick={() => handleMilestoneDelete(milestone.id)}>
@@ -59,11 +66,6 @@ const Milestone = ({ milestone, setMilestones, milestones, goalId }: MilestonePr
             </button>
           </div>
         </div>
-      )}
-      {isEditing && (
-        <button type="submit" onClick={handleSaveButton}>
-          Save
-        </button>
       )}
     </div>
   )
