@@ -35,7 +35,7 @@
 
 .formInput {
   border: 1px solid lightgrey;
-  width: 75%;
+  /* width: 75%; */
   height: 3rem;
   border-radius: 1rem;
   padding-inline: 0.5rem;
@@ -48,5 +48,5 @@
 }
 
 .saveButton {
-  width: 75%;
+  /* width: 75%; */
 }

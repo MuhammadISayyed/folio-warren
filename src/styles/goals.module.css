@@ -1,0 +1,23 @@
+.goalsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.goalLink {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  gap: 0.5rem;
+}
+
+.goalTitle {
+  color: blue;
+  display: inline-block;
+}
+
+.goalDescription {
+  color: black;
+  font-style: italic;
+  display: inline-block;
+}
