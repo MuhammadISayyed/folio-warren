@@ -1,8 +1,9 @@
-// TODOS
-// 1. Separate prioritized from deprioritized goals
-// 2. Sort goals by date
+// TODO
+// 0. Revise how you fetch data and get rid of useEffect
+// 1. Limit prioritized goals to 5
+// 2. Add a separator to the end of each goal
 
-import { Link } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 import { supabase } from '../../lib/supabaseClient'
 import { useEffect, useState } from 'react'
 import AppNav from '../components/AppNav'
@@ -13,6 +14,8 @@ type GoalsProps = {
 }
 
 const Goals = ({ userId }: GoalsProps) => {
+  const loader = useLoaderData()
+  console.log(loader)
   const [prioritizedGoals, setPrioritizedGoals] = useState<
     { id: string; title: string; description: string }[] | null
   >([])

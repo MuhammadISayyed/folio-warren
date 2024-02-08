@@ -1,7 +1,3 @@
-// So, what do I need?
-// The form should be controlled.
-// Take the form output using state and pass it to supabase
-
 import { useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 
@@ -36,7 +32,7 @@ const NewGoal = ({ userId }: NewGoalProps) => {
           <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
         </label>
         <label>
-          Prioritze the goal?{' '}
+          Prioritze?{' '}
           <input
             type="checkbox"
             checked={prioritized}
