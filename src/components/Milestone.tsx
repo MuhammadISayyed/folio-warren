@@ -1,3 +1,13 @@
+/*
+What is this component doing?
+1. It handles the milestone state (whether being edited or not).
+2. It handles updating the milestone data in the database.
+3. It also handles deleting milestones.
+
+What I'm hoping to do is to separate LOADING the milestone from updating or deleting it. 
+
+*/
+
 import { useState } from 'react'
 import { MilestoneType } from '../types'
 import { supabase } from '../../lib/supabaseClient'

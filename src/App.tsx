@@ -9,6 +9,7 @@ import Goals from './pages/Goals'
 import Home from './pages/Home'
 import './App.css'
 import { supabase } from '../lib/supabaseClient'
+import Goal, { goalLoader } from './pages/Goal'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,7 +40,9 @@ const router = createBrowserRouter(
           return { prioritized, deprioritized }
         }}
       />
-      {/* {<Route path="/" element={<Home userId={userId} />} />} */}
+
+      <Route path="goals/:goalId" element={<Goal />} loader={goalLoader} />
+
       {/* <Route path="sign-in" element={<SignIn />} /> */}
       {/* <Route path="new-goal" element={<NewGoalForm} /> */}
       {/* <Route

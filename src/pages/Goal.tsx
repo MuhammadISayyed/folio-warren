@@ -1,25 +1,35 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
-import { useParams } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 import Milestone from '../components/Milestone'
-import { MilestoneType } from '../types'
+import { type GoalType, MilestoneType } from '../types'
 import NewMilestone from '../components/NewMilestone'
 import AppNav from '../components/AppNav'
 import styles from '../styles/goal.module.css'
 import { ShootingStar } from '@phosphor-icons/react'
+import { getUser } from '../../lib/authActions'
 
-type GoalProps = {
-  userId: string | undefined
+export const goalLoader = async ({ params }) => {
+  const user = await getUser()
+
+  const { data: goal } = await supabase
+    .from('goals')
+    .select()
+    .eq('user_id', user?.id)
+    .eq('id', params.goalId)
+
+  const { data: milestones } = await supabase
+    .from('milestone')
+    .select()
+    .eq('goal_id', params.goalId)
+  return { goal, milestones }
 }
 
-const Goal = ({ userId }: GoalProps) => {
-  const [goal, setGoal] = useState<{
-    id: string
-    title: string
-    description: string
-    prioritized: boolean
-  } | null>(null)
-  const [milestones, setMilestones] = useState<MilestoneType[] | null>(null)
+const Goal = () => {
+  const loader = useLoaderData() as { goal: GoalType[]; milestones: MilestoneType[] }
+  const goal = loader.goal[0]
+  console.log(loader)
+  const milestones = loader.milestones
 
   const [formData, setFormData] = useState<{
     title?: string
@@ -27,44 +37,6 @@ const Goal = ({ userId }: GoalProps) => {
     prioritized?: boolean
   }>({ title: '', description: '', prioritized: false })
   const [isEditing, setIsEditing] = useState(false)
-  const { goalId } = useParams()
-  useEffect(() => {
-    const fetchGoal = async () => {
-      const { data, error } = await supabase
-        .from('goals')
-        .select()
-        .eq('user_id', userId)
-        .eq('id', goalId)
-
-      if (error) console.log(error)
-
-      console.log(data)
-
-      if (data) {
-        setGoal(data[0])
-        setFormData({
-          title: goal?.title,
-          description: goal?.description,
-          prioritized: goal?.prioritized,
-        })
-      }
-
-      if (goalId) {
-        const retrieveMilestones = async () => {
-          const retreivedMilestones = await supabase
-            .from('milestone')
-            .select()
-            .eq('goal_id', goalId)
-
-          console.log(retreivedMilestones.data)
-          setMilestones(retreivedMilestones.data)
-        }
-        retrieveMilestones()
-      }
-    }
-
-    fetchGoal()
-  }, [userId, goalId, goal?.title, goal?.description, goal?.prioritized])
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -141,11 +113,10 @@ const Goal = ({ userId }: GoalProps) => {
           </form>
         </div>
       ) : (
-        // START HERE 🔅
         <div className={styles.goalContainer}>
           {/* I need to add a badge or something that signals prioritization state */}
-          <h1 className={styles.goalTitle}>{goal?.title}</h1>
-          <p className={styles.goalDescription}>{goal?.description}</p>
+          <h1 className={styles.goalTitle}>{goal.title}</h1>
+          <p className={styles.goalDescription}>{goal.description}</p>
           {goal ? (
             <svg
               className={styles.separator}

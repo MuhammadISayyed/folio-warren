@@ -1,5 +1,5 @@
 export type MilestoneType = { milestone: string; id: string }
-export type GoalProps = {
+export type GoalType = {
   id: string
   title: string
   description: string
