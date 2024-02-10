@@ -5,14 +5,10 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from 'react-router-dom'
-// import { useEffect, useState } from 'react'
-// import Goals from './pages/Goals'
-// import Goal from './pages/Goal'
-// import NewGoalForm from './pages/NewGoalForm'
-// import SignIn from './pages/SignIn'
+import Goals from './pages/Goals'
 import Home from './pages/Home'
 import './App.css'
-// import { supabase } from '../lib/supabaseClient'
+import { supabase } from '../lib/supabaseClient'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +20,25 @@ const router = createBrowserRouter(
         return user
       }}
     >
+      <Route
+        path="/goals"
+        element={<Goals />}
+        loader={async () => {
+          const user = await getUser()
+          const { data: prioritized } = await supabase
+            .from('goals')
+            .select()
+            .eq('user_id', user?.id)
+            .eq('prioritized', true)
+          const { data: deprioritized } = await supabase
+            .from('goals')
+            .select()
+            .eq('user_id', user?.id)
+            .eq('prioritized', false)
+
+          return { prioritized, deprioritized }
+        }}
+      />
       {/* {<Route path="/" element={<Home userId={userId} />} />} */}
       {/* <Route path="sign-in" element={<SignIn />} /> */}
       {/* <Route path="new-goal" element={<NewGoalForm} /> */}
@@ -43,15 +58,6 @@ const router = createBrowserRouter(
 )
 
 const App = () => {
-  // const [userId, setUserId] = useState<string | undefined>('')
-  // useEffect(() => {
-  //   const setCurrentUser = async () => {
-  //     const user = await getUser()
-  //     setUserId(user?.id)
-  //   }
-  //   setCurrentUser()
-  // }, [])
-
   return <RouterProvider router={router} />
 }
 

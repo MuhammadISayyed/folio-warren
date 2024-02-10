@@ -5,7 +5,7 @@ type NavProps = {
   userId: string | undefined
 }
 
-const Nav = ({ userId }: NavProps) => {
+const HomeNav = ({ userId }: NavProps) => {
   const navigate = useNavigate()
   const handleSignInPress = () => {
     if (userId != undefined) {
@@ -26,4 +26,4 @@ const Nav = ({ userId }: NavProps) => {
   )
 }
 
-export default Nav
+export default HomeNav
