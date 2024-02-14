@@ -10,7 +10,8 @@ import Home from './pages/Home'
 import './App.css'
 import { supabase } from '../lib/supabaseClient'
 import Goal, { goalLoader } from './pages/Goal'
-
+import EditGoal from './pages/EditGoal'
+import SignIn from './pages/SignIn'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
@@ -42,8 +43,9 @@ const router = createBrowserRouter(
       />
 
       <Route path="goals/:goalId" element={<Goal />} loader={goalLoader} />
+      <Route path="goals/:goalId/edit" element={<EditGoal />} loader={goalLoader} />
 
-      {/* <Route path="sign-in" element={<SignIn />} /> */}
+      <Route path="sign-in" element={<SignIn />} />
       {/* <Route path="new-goal" element={<NewGoalForm} /> */}
       {/* <Route
           path="goals"

@@ -1,6 +1,7 @@
 export type MilestoneType = { milestone: string; id: string }
+
 export type GoalType = {
-  id: string
+  id?: string
   title: string
   description: string
   prioritized: boolean

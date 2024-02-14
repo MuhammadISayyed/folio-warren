@@ -1,13 +1,3 @@
-/*
-What is this component doing?
-1. It handles the milestone state (whether being edited or not).
-2. It handles updating the milestone data in the database.
-3. It also handles deleting milestones.
-
-What I'm hoping to do is to separate LOADING the milestone from updating or deleting it. 
-
-*/
-
 import { useState } from 'react'
 import { MilestoneType } from '../types'
 import { supabase } from '../../lib/supabaseClient'
@@ -16,7 +6,7 @@ import { ShootingStar } from '@phosphor-icons/react'
 
 type MilestoneProps = {
   milestone: MilestoneType
-  setMilestones: React.Dispatch<React.SetStateAction<MilestoneType[] | null>>
+  setMilestones: React.Dispatch<React.SetStateAction<MilestoneType[]>>
   milestones: MilestoneType[]
   goalId: string | undefined
 }
@@ -29,11 +19,12 @@ const Milestone = ({ milestone, setMilestones, milestones, goalId }: MilestonePr
     setMilestones([...newMilestonesArr, { id: milestone.id, milestone: e.target.value }])
   }
 
-  const handleSaveButton = async () => {
+  const handleSaveButton = async (id: string) => {
     const { error } = await supabase
       .from('milestone')
       .update({ milestone: milestone.milestone, goal_id: goalId })
-      .eq('id', milestone.id)
+      .eq('id', id)
+      .eq('goal_id', goalId)
     if (error) console.log(error)
     setIsEditing(false)
   }
@@ -57,7 +48,7 @@ const Milestone = ({ milestone, setMilestones, milestones, goalId }: MilestonePr
             onChange={(e) => handleEditMilestone(milestone.id, e)}
           />
 
-          <button type="submit" onClick={handleSaveButton}>
+          <button type="submit" onClick={() => handleSaveButton(milestone.id)}>
             Save
           </button>
         </div>
